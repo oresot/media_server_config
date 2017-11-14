@@ -1,4 +1,11 @@
 version: "3"
+volumes:
+  nfs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.10,rw
+      device: ":/volume2"
 services:
   sonarr:
     image: lsioarmhf/sonarr
@@ -10,11 +17,10 @@ services:
     environment:
       - PGID=1000
       - PUID=1000
-      - TZ=America/New_York
+      - TZ=Europe/Zurich
     volumes:
       - /home/pi/.config/NzbDrone:/config
-      - /home/pi/media_plex/tv:/tv
-      - /home/pi/media_plex/downloads:/downloads
+      - nfs:/volume2
   radarr:
     image: lsioarmhf/radarr
     container_name: radarr
@@ -24,11 +30,10 @@ services:
     environment:
       - PGID=1000
       - PUID=1000
-      - TZ=America/New_York
+      - TZ=Europe/Zurich
     volumes:
       - /home/pi/radarr/config:/config
-      - /home/pi/hdd_movies/movies:/movies
-      - /home/pi/hdd_movies/downloads:/downloads
+      - nfs:/volume2
   jackett:
     image: lsioarmhf/jackett
     container_name: jackett
@@ -38,7 +43,7 @@ services:
     environment:
       - PGID=1000
       - PUID=1000
-      - TZ=America/New_York
+      - TZ=Europe/Zurich
     volumes:
       - /home/pi/jackett/config:/config
-      - /home/pi/jackett/downloads:/downloads
+      - nfs:/volume2
