@@ -42,15 +42,3 @@ services:
     volumes:
       - /home/pi/jackett/config:/config
       - /home/pi/jackett/downloads:/downloads
-  ombi:
-    image: lsioarmhf/ombi
-    container_name: ombi
-    restart: always
-    ports:
-      - "3579:3579"
-    environment:
-      - PGID=1000
-      - PUID=1000
-      - TZ=America/New_York
-    volumes:
-      - /home/pi/ombi/config:/config
